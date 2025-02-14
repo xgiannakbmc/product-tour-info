@@ -1,0 +1,48 @@
+{
+    "Defaults" : {
+        "Application" : "SampleApp",
+        "SubApplication" : "SampleSubApp",
+        "RunAs" : "USERNAME",
+        "Host" : "HOST",
+
+        "Job": {
+            "When" : {
+                "Months": ["JAN", "OCT", "DEC"],
+                "MonthDays":["22","1","11"],
+                "WeekDays":["MON","TUE", "WED", "THU", "FRI"],
+                "FromTime":"0300",
+                "ToTime":"2100"
+            },
+            "ActionIfFailure" : {
+                "Type": "If",       
+                "CompletionStatus": "NOTOK",
+                
+                "mailToTeam": {
+                    "Type": "Mail",
+                    "Message": "%%JOBNAME failed",
+                    "To": "team@mycomp.com"
+                }
+            }
+        }
+    },
+
+    "xgi_AutomationAPISampleFlow": {
+        "Type": "Folder",
+        "Comment" : "Code reviewed by Joe",
+
+        "CommandJob": {
+            "Type": "Job:Command",
+            "Command": "echo my 1st job"
+        },
+
+        "WaitJob": {
+            "Type": "Job:Command",
+            "Command": "sleep 30; echo my 2st job"
+       },
+
+        "Flow": {
+            "Type": "Flow",
+            "Sequence": ["CommandJob", "WaitJob"]
+        }
+    }
+}
